@@ -24,10 +24,15 @@ class SelfAttention(nn.Module):
         # Q -> [batch,seq_len,head_dim]
         # K -> [batch,seq_len,head_dim]
         # Score -> [batch,seq_len,seq_len]
-        _, _ , head_dim = Q.shape
+        _, seq_len , head_dim = Q.shape
         score = Q @ K.transpose(-2,-1) # [batch,seqlen,headdim] so -1=head_dim and -2 =seqlen
         scaled_score = score / (head_dim ** 0.5)
-        return scaled_score
+
+        mask = torch.tril(torch.ones(seq_len,seq_len))
+        mask = mask.masked_fill(mask ==0 , float('-inf'))
+
+        
+        return scaled_score + mask
     
     def attend(self,scores,v):
         # scores shape: (batch, seq_len, seq_len)s
