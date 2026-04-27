@@ -1,0 +1,19 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.wandb/
+
+# React
+ui/node_modules/
+
+# Git
+.git/
+.gitignore
+
+# Mac
+.DS_Store
+
+# Docs
+README.md
+*.md

@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import torch
+import os
 import sys
 sys.path.append('..')
 from tokenizer.bpe_tokenizer import BPEtokenizer
@@ -53,4 +56,18 @@ def generate(request: GenerateRequest):
         max_new_tokens=request.max_new_tokens,
         temperature=request.temperature
     )
+
+    if "A:" in response:
+        response = response.split("A:")[1].strip()
+    
+    if "Q:" in response:
+        response = response.split("Q:")[0].strip()
     return GenerateResponse(response=response)
+
+
+ui_build_path = os.path.join(os.path.dirname(__file__), '..', 'ui', 'build')
+app.mount("/static", StaticFiles(directory=ui_build_path + "/static"), name="static")
+
+@app.get("/")
+def serve_ui():
+    return FileResponse(ui_build_path + "/index.html")
