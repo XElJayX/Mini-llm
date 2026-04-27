@@ -629,18 +629,18 @@ export default function App() {
         <header className="header">
           <div className="header-left">
             <div className="avatar">
-              <span className="avatar-letter">A</span>
+              <span className="avatar-letter">J</span>
               <span className="avatar-pip" />
             </div>
             <div>
-              <div className="header-name">Alex Chen</div>
+              <div className="header-name">Jayanth Ravimurugan</div>
               <div className="header-sub">Ask me about <b>my experience & work</b></div>
             </div>
           </div>
           <div className="header-right">
-            <a className="hdr-link" href="#">Resume</a>
-            <a className="hdr-link" href="#">GitHub</a>
-            <a className="hdr-link" href="#">LinkedIn</a>
+            <a className="hdr-link" href="https://jayanthravimurugan.vercel.app/">Resume</a>
+            <a className="hdr-link" href="https://github.com/XElJayX">GitHub</a>
+            <a className="hdr-link" href="https://www.linkedin.com/in/jayanth-r-x/">LinkedIn</a>
             <div className="hire-badge">
               <span className="hire-pip" />
               Open to work
@@ -654,10 +654,10 @@ export default function App() {
         <div className="messages">
           {messages.length === 0 && !loading ? (
             <div className="welcome">
-              <div className="welcome-icon">A</div>
-              <div className="welcome-title">Hi — I'm <em>Alex's</em> AI</div>
+              <div className="welcome-icon">J</div>
+              <div className="welcome-title">Hi — I'm <em>Jayanth's</em> AI</div>
               <div className="welcome-desc">
-                I'm trained on Alex's resume, projects, and experience. Ask me anything to get a real picture of what he brings to the table.
+                I'm trained on Jayanth's resume, projects, and experience. Ask me anything to get a real picture of what he brings to the table.
               </div>
               <div className="skill-row">
                 {SKILLS.map(s => (
@@ -680,7 +680,7 @@ export default function App() {
                     <div className={`meta-icon ${msg.role === "user" ? "user" : "ai"}`}>
                       {msg.role === "user" ? "U" : "A"}
                     </div>
-                    <span className="meta-name">{msg.role === "user" ? "You" : "Alex's AI"}</span>
+                    <span className="meta-name">{msg.role === "user" ? "You" : "Jayanth's AI"}</span>
                     <span className="meta-time">{msg.time}</span>
                   </div>
                   <div className={`bubble ${msg.role === "user" ? "user" : "ai"}`}>
@@ -709,13 +709,13 @@ export default function App() {
               onChange={e => setPrompt(e.target.value)}
               onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
               placeholder="Ask about skills, projects, experience…"
-              disabled={loading}
+al              disabled={loading}
             />
             <button className="send-btn" onClick={() => send()} disabled={loading || !prompt.trim()}>↑</button>
           </div>
           <div className="input-footer">
             <span className="foot-hint">Press <kbd>Enter</kbd> to send</span>
-            <span className="foot-right">Trained on <b>personal data</b></span>
+            <span className="foot-right">Note: Trained on <b>personal data,</b> Might Misbehave</span>
           </div>
         </div>
 
