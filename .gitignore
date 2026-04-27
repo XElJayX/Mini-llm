@@ -24,4 +24,4 @@ ui/build/
 
 # Env
 .env
-*.env
+*.envcheckpoints/
