@@ -607,7 +607,7 @@ export default function App() {
     setPrompt("");
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/generate", {
+      const res = await fetch("/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: content }),
@@ -653,7 +653,7 @@ export default function App() {
 
         <div className="messages">
           {messages.length === 0 && !loading ? (
-            <div className="welcome">
+            <div className="elcome">
               <div className="welcome-icon">J</div>
               <div className="welcome-title">Hi — I'm <em>Jayanth's</em> AI</div>
               <div className="welcome-desc">
