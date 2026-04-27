@@ -614,8 +614,9 @@ export default function App() {
       });
       const data = await res.json();
       setMessages((p) => [...p, { role: "assistant", content: data.response, time: ts() }]);
-    } catch {
+    } catch (err){
       setMessages((p) => [...p, { role: "assistant", content: "Something went wrong — please try again.", time: ts() }]);
+      console.error(err);
     } finally {
       setLoading(false);
     }
