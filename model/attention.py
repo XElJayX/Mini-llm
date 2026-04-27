@@ -28,8 +28,8 @@ class SelfAttention(nn.Module):
         score = Q @ K.transpose(-2,-1) # [batch,seqlen,headdim] so -1=head_dim and -2 =seqlen
         scaled_score = score / (head_dim ** 0.5)
 
-        mask = torch.tril(torch.ones(seq_len,seq_len))
-        mask = mask.masked_fill(mask ==0 , float('-inf'))
+        mask = torch.tril(torch.ones(seq_len,seq_len)).to(Q.device)
+        mask = mask.masked_fill(mask==0 , float('-inf'))
 
         
         return scaled_score + mask

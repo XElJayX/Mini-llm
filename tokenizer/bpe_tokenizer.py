@@ -1,5 +1,5 @@
 from collections import defaultdict
-
+import json
 class BPEtokenizer:
 
     def __init__(self,num_merges=100):
@@ -65,6 +65,12 @@ class BPEtokenizer:
             self.merges.append(best_pair)
 
             print(f"Merge {i+1}: {best_pair[0]} + {best_pair[1]} → {best_pair[0]+best_pair[1]}")
+            all_tokens = set()
+            for word in vocab:
+                for token in word:
+                    all_tokens.add(token)
+            self.str_to_id = {s: i for i, s in enumerate(sorted(all_tokens))}
+            self.id_to_str = {i: s for s, i in self.str_to_id.items()}
         
         return self.merges, vocab
 
@@ -91,12 +97,27 @@ class BPEtokenizer:
                     i+=1
             tokens = new_tokens
         
-        #BUILD VOCAB FROM MERGES TO ASSIGN INTEGER ID
-        vocab = sorted(set(t for t in tokens))
-        self.str_to_id = {s:i for i,s in enumerate(vocab)}
-        print("TOKENS", tokens)
-        return [self.str_to_id[t] for t in tokens], self.str_to_id
+        return [self.str_to_id.get(t, 0) for t in tokens]
 
     def decode(self, ids):
-        self.id_to_str = {i:s for s,i in self.str_to_id.items()}
-        return ''.join(self.id_to_str[i] for i in ids)
+        tokens = [self.id_to_str.get(i, '') for i in ids]
+        text = ''.join(tokens)
+        text = text.replace('#', ' ')  
+        return text.strip()
+
+    def save(self, path):
+        data = {
+            "merges": [list(pair) for pair in self.merges],
+            "str_to_id": self.str_to_id
+        }
+
+        with open(path, "w") as f:
+            json.dump(data, f)
+
+    def load(self, path): 
+        with open(path, "r") as f:
+            data = json.load(f)
+
+        self.merges = [tuple(pair) for pair in data["merges"]]
+        self.str_to_id = data["str_to_id"]
+        self.id_to_str = {int(i): s for s, i in self.str_to_id.items()}

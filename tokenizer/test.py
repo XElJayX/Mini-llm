@@ -1,18 +1,43 @@
-from model.mini_llm import MiniLLM
 import torch
+from tokenizer.bpe_tokenizer import BPEtokenizer
+from model.mini_llm import MiniLLM
 
+config = {
+    'vocab_size': 532,
+    'embedding_dim': 64,
+    'n_heads': 4,
+    'n_layers': 4,
+    'max_seq_len': 64,
+}
+
+device = 'mps' if torch.backends.mps.is_available() else 'cpu'
+
+# Load tokenizer
+tokenizer = BPEtokenizer()
+tokenizer.load('checkpoints/tokenizer.json')
+config['vocab_size'] = len(tokenizer.str_to_id)  # then build model
+
+# Load model
 model = MiniLLM(
-    vocab_size=512,
-    embedding_dim=64,
-    n_heads=4,
-    n_layers=4,
-    max_seq_len=128
-)
+    vocab_size=config['vocab_size'],
+    embedding_dim=config['embedding_dim'],
+    n_heads=config['n_heads'],
+    n_layers=config['n_layers'],
+    max_seq_len=config['max_seq_len']
+).to(device)
 
-x = torch.randint(0, 512, (2, 16))  # batch=2, seq_len=16
-out = model(x)
-print("Output shape:", out.shape)  # expect (2, 16, 512)
+model.load_state_dict(torch.load('checkpoints/model.pt', map_location=device))
+# add this to generate.py temporarily
+# print("Tokenizer vocab size:", len(tokenizer.str_to_id))
+# print("Config vocab size:", config['vocab_size'])
+# print("Max token id in tokenizer:", max(tokenizer.id_to_str.keys()))
+# # Generate
+prompts = [
+    "Q: Tell me about your experience?",
+    "Q: What projects have you built?",
+    "Q: Why should we hire you?",
+]
 
-# Count parameters
-total = sum(p.numel() for p in model.parameters())
-print(f"Total parameters: {total:,}")
+for prompt in prompts:
+    print(f"\n{prompt}")
+    print(model.generate(tokenizer, prompt=prompt))

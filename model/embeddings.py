@@ -11,7 +11,6 @@ class Embeddings(nn.Module):
         batch_size, seq_len = x.shape
         #X is tensor of token ids , [batch_size, seq_len]
         token_embeddings = self.token_embedding_table(x)
-        position  = torch.arange(seq_len)
-        pos_embeddings = self.pos_embedding_table(position)
+        pos_embeddings = self.pos_embedding_table(torch.arange(x.size(1), device=x.device).unsqueeze(0))
 
         return token_embeddings + pos_embeddings
