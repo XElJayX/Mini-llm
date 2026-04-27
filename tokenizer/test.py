@@ -1,15 +1,7 @@
-from tokenizer.bpe_tokenizer import BPEtokenizer
+from model.attention import MultiHeadAttention
+import torch
 
-tokenizer = BPEtokenizer(num_merges=10)
-
-text = "hello help world hell helmet"
-tokenizer.train(text)
-
-test = "hello help"
-ids, _ = tokenizer.encode(test)
-decoded = tokenizer.decode(ids)
-
-print(f"\nOriginal : {test}")
-print(f"Ids      : {ids}")
-print(f"Decoded  : {decoded}")
-print(f"Match    : {test == decoded}")
+mha = MultiHeadAttention(embedding_dim=16, n_heads=4)
+x = torch.randn(2, 8, 16)
+out = mha(x)
+print("Output shape:", out.shape)  # expect (2, 8, 16)
