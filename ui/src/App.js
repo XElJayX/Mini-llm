@@ -654,7 +654,7 @@ export default function App() {
 
         <div className="messages">
           {messages.length === 0 && !loading ? (
-            <div className="elcome">
+            <div className="welcome">
               <div className="welcome-icon">J</div>
               <div className="welcome-title">Hi — I'm <em>Jayanth's</em> AI</div>
               <div className="welcome-desc">
@@ -710,7 +710,7 @@ export default function App() {
               onChange={e => setPrompt(e.target.value)}
               onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
               placeholder="Ask about skills, projects, experience…"
-al              disabled={loading}
+              disabled={loading}
             />
             <button className="send-btn" onClick={() => send()} disabled={loading || !prompt.trim()}>↑</button>
           </div>
