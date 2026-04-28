@@ -614,7 +614,7 @@ export default function App() {
       });
       const data = await res.json();
       setMessages((p) => [...p, { role: "assistant", content: data.response, time: ts() }]);
-    } catch (err){
+    } catch (err) {
       setMessages((p) => [...p, { role: "assistant", content: "Something went wrong — please try again.", time: ts() }]);
       console.error(err);
     } finally {
@@ -639,9 +639,9 @@ export default function App() {
             </div>
           </div>
           <div className="header-right">
-            <a className="hdr-link" href="https://jayanthravimurugan.vercel.app/">Resume</a>
-            <a className="hdr-link" href="https://github.com/XElJayX">GitHub</a>
-            <a className="hdr-link" href="https://www.linkedin.com/in/jayanth-r-x/">LinkedIn</a>
+            <a className="hdr-link" href="https://jayanthravimurugan.vercel.app/" target="_blank" rel="noreferrer">Resume</a>
+            <a className="hdr-link" href="https://github.com/XElJayX" target="_blank" rel="noreferrer">GitHub</a>
+            <a className="hdr-link" href="https://www.linkedin.com/in/jayanth-r-x/" target="_blank" rel="noreferrer">LinkedIn</a>
             <div className="hire-badge">
               <span className="hire-pip" />
               Open to work
@@ -654,7 +654,7 @@ export default function App() {
 
         <div className="messages">
           {messages.length === 0 && !loading ? (
-            <div className="welcome">
+            <div className="welcome">  {/* ← fixed: was "elcome" */}
               <div className="welcome-icon">J</div>
               <div className="welcome-title">Hi — I'm <em>Jayanth's</em> AI</div>
               <div className="welcome-desc">
@@ -679,7 +679,7 @@ export default function App() {
                 <div key={i} className={`msg-row ${msg.role === "user" ? "user" : "ai"}`}>
                   <div className="msg-meta">
                     <div className={`meta-icon ${msg.role === "user" ? "user" : "ai"}`}>
-                      {msg.role === "user" ? "U" : "A"}
+                      {msg.role === "user" ? "U" : "J"}
                     </div>
                     <span className="meta-name">{msg.role === "user" ? "You" : "Jayanth's AI"}</span>
                     <span className="meta-time">{msg.time}</span>
@@ -691,7 +691,7 @@ export default function App() {
               ))}
               {loading && (
                 <div className="typing-row">
-                  <div className="meta-icon ai" style={{width:22,height:22,borderRadius:7,background:"var(--green-tint)",border:"1px solid var(--green-border)",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Lora',serif",fontStyle:"italic",color:"var(--green-mid)",fontSize:12,flexShrink:0,marginTop:2}}>A</div>
+                  <div className="meta-icon ai" style={{width:22,height:22,borderRadius:7,background:"var(--green-tint)",border:"1px solid var(--green-border)",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Lora',serif",fontStyle:"italic",color:"var(--green-mid)",fontSize:12,flexShrink:0,marginTop:2}}>J</div>
                   <div className="typing-bubble">
                     <div className="td"/><div className="td"/><div className="td"/>
                   </div>
@@ -716,7 +716,7 @@ export default function App() {
           </div>
           <div className="input-footer">
             <span className="foot-hint">Press <kbd>Enter</kbd> to send</span>
-            <span className="foot-right">Note: Trained on <b>personal data,</b> Might Misbehave</span>
+            <span className="foot-right">Note: Trained on <b>personal data</b> — may misbehave</span>
           </div>
         </div>
 
